@@ -35,7 +35,7 @@ ___You can check this sample app <a href="https://github.com/bonillap/price-esti
 
 Import this component in any of your svelte files:
 ```javascript
-import PriceEstimate from "price-estimate";
+import PriceEstimate from "svelte-price-estimate"; 
 ```
 Add the component tag inside your html
 ```html
