@@ -17,16 +17,19 @@
 
 ## 🚥 Getting Started <a name = "getting_started"></a>
 
-All you have to do is install this component via npm:
+You have to install this component via npm:
 
 
 ```
 npm install bonillap/price-estimate
 ```
-You have to import these js and css in your index.html :
+
+And import these js and css in your index.html :
 - bootstrap, only for styles
 - jquery, we need to slik to work
 - slick, carousel for category selector
+
+___You can check this sample app <a href="https://github.com/bonillap/price-estimate-test">here</a> and check how it works___
 
 ## ▶️ Running <a name = "running"></a>
 
@@ -217,13 +220,13 @@ items:
 ## 🎓 Considerations <a name = "considerations"></a>
 
 - with unique value set true, we can manage 1 price. That means, a section has no quantity because it is an one life time payment:
-```
+```javascript
 price_ranges: [
     { price: 120, step: 1}
 ]
 ```
 - with unique value set false, you can play more.
-```
+```javascript
 price_ranges: [
     {from_quantity:0, to_quantity: 6, price: 1230, step: 6},
     {from_quantity:6, price: 200, step: 1}

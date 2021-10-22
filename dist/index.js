@@ -68,6 +68,9 @@
     function space() {
         return text(' ');
     }
+    function empty() {
+        return text('');
+    }
     function listen(node, event, handler, options) {
         node.addEventListener(event, handler, options);
         return () => node.removeEventListener(event, handler, options);
@@ -242,6 +245,12 @@
             block.o(local);
         }
     }
+
+    const globals = (typeof window !== 'undefined'
+        ? window
+        : typeof globalThis !== 'undefined'
+            ? globalThis
+            : global);
     function create_component(block) {
         block && block.c();
     }
@@ -682,14 +691,14 @@
 
     function get_each_context$1(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[17] = list[i];
-    	child_ctx[19] = i;
+    	child_ctx[18] = list[i];
+    	child_ctx[20] = i;
     	return child_ctx;
     }
 
     function get_each_context_1$1(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[20] = list[i];
+    	child_ctx[21] = list[i];
     	return child_ctx;
     }
 
@@ -697,11 +706,11 @@
     function create_each_block_1$1(ctx) {
     	let tr;
     	let td0;
-    	let t0_value = /*option*/ ctx[20].description + "";
+    	let t0_value = /*option*/ ctx[21].description + "";
     	let t0;
     	let t1;
     	let td1;
-    	let t2_value = /*option*/ ctx[20].category_name + "";
+    	let t2_value = /*option*/ ctx[21].category_name + "";
     	let t2;
 
     	return {
@@ -725,8 +734,8 @@
     			append(td1, t2);
     		},
     		p(ctx, dirty) {
-    			if (dirty & /*estimates*/ 8 && t0_value !== (t0_value = /*option*/ ctx[20].description + "")) set_data(t0, t0_value);
-    			if (dirty & /*estimates*/ 8 && t2_value !== (t2_value = /*option*/ ctx[20].category_name + "")) set_data(t2, t2_value);
+    			if (dirty & /*estimates*/ 16 && t0_value !== (t0_value = /*option*/ ctx[21].description + "")) set_data(t0, t0_value);
+    			if (dirty & /*estimates*/ 16 && t2_value !== (t2_value = /*option*/ ctx[21].category_name + "")) set_data(t2, t2_value);
     		},
     		d(detaching) {
     			if (detaching) detach(tr);
@@ -739,12 +748,12 @@
     	let div;
     	let table;
     	let th0;
-    	let t0_value = /*estimate*/ ctx[17].item.title + "";
+    	let t0_value = /*estimate*/ ctx[18].item.title + "";
     	let t0;
     	let t1;
-    	let t2_value = /*estimate*/ ctx[17].quantity + "";
+    	let t2_value = /*estimate*/ ctx[18].quantity + "";
     	let t2;
-    	let t3_value = /*estimate*/ ctx[17].item.measure + "";
+    	let t3_value = /*estimate*/ ctx[18].item.measure.short_name + "";
     	let t3;
     	let t4;
     	let t5;
@@ -763,10 +772,10 @@
     	let dispose;
 
     	function click_handler() {
-    		return /*click_handler*/ ctx[11](/*i*/ ctx[19]);
+    		return /*click_handler*/ ctx[12](/*i*/ ctx[20]);
     	}
 
-    	let each_value_1 = /*estimate*/ ctx[17].item.options;
+    	let each_value_1 = /*estimate*/ ctx[18].item.options;
     	let each_blocks = [];
 
     	for (let i = 0; i < each_value_1.length; i += 1) {
@@ -775,7 +784,7 @@
 
     	number = new Number({
     			props: {
-    				number: /*estimate*/ ctx[17].item.total,
+    				number: /*estimate*/ ctx[18].item.total,
     				locale: "en"
     			}
     		});
@@ -853,12 +862,12 @@
     		},
     		p(new_ctx, dirty) {
     			ctx = new_ctx;
-    			if ((!current || dirty & /*estimates*/ 8) && t0_value !== (t0_value = /*estimate*/ ctx[17].item.title + "")) set_data(t0, t0_value);
-    			if ((!current || dirty & /*estimates*/ 8) && t2_value !== (t2_value = /*estimate*/ ctx[17].quantity + "")) set_data(t2, t2_value);
-    			if ((!current || dirty & /*estimates*/ 8) && t3_value !== (t3_value = /*estimate*/ ctx[17].item.measure + "")) set_data(t3, t3_value);
+    			if ((!current || dirty & /*estimates*/ 16) && t0_value !== (t0_value = /*estimate*/ ctx[18].item.title + "")) set_data(t0, t0_value);
+    			if ((!current || dirty & /*estimates*/ 16) && t2_value !== (t2_value = /*estimate*/ ctx[18].quantity + "")) set_data(t2, t2_value);
+    			if ((!current || dirty & /*estimates*/ 16) && t3_value !== (t3_value = /*estimate*/ ctx[18].item.measure.short_name + "")) set_data(t3, t3_value);
 
-    			if (dirty & /*estimates*/ 8) {
-    				each_value_1 = /*estimate*/ ctx[17].item.options;
+    			if (dirty & /*estimates*/ 16) {
+    				each_value_1 = /*estimate*/ ctx[18].item.options;
     				let i;
 
     				for (i = 0; i < each_value_1.length; i += 1) {
@@ -881,7 +890,7 @@
     			}
 
     			const number_changes = {};
-    			if (dirty & /*estimates*/ 8) number_changes.number = /*estimate*/ ctx[17].item.total;
+    			if (dirty & /*estimates*/ 16) number_changes.number = /*estimate*/ ctx[18].item.total;
     			number.$set(number_changes);
     		},
     		i(local) {
@@ -904,13 +913,13 @@
     }
 
     // (123:2) {#if (estimates.length == 0)}
-    function create_if_block_2$1(ctx) {
+    function create_if_block_3(ctx) {
     	let div;
 
     	return {
     		c() {
     			div = element("div");
-    			div.textContent = "Aun no hay items agregados al estimado";
+    			div.textContent = "No items added to estimate, yet";
     			attr(div, "class", "no-items-text svelte-lhb2gh");
     		},
     		m(target, anchor) {
@@ -925,84 +934,119 @@
     // (134:2) {#if (estimates.length > 0)}
     function create_if_block_1$1(ctx) {
     	let br;
-    	let t0;
+    	let t;
+    	let if_block_anchor;
+    	let if_block = /*mailingURL*/ ctx[0] && create_if_block_2$1(ctx);
+
+    	return {
+    		c() {
+    			br = element("br");
+    			t = space();
+    			if (if_block) if_block.c();
+    			if_block_anchor = empty();
+    		},
+    		m(target, anchor) {
+    			insert(target, br, anchor);
+    			insert(target, t, anchor);
+    			if (if_block) if_block.m(target, anchor);
+    			insert(target, if_block_anchor, anchor);
+    		},
+    		p(ctx, dirty) {
+    			if (/*mailingURL*/ ctx[0]) {
+    				if (if_block) {
+    					if_block.p(ctx, dirty);
+    				} else {
+    					if_block = create_if_block_2$1(ctx);
+    					if_block.c();
+    					if_block.m(if_block_anchor.parentNode, if_block_anchor);
+    				}
+    			} else if (if_block) {
+    				if_block.d(1);
+    				if_block = null;
+    			}
+    		},
+    		d(detaching) {
+    			if (detaching) detach(br);
+    			if (detaching) detach(t);
+    			if (if_block) if_block.d(detaching);
+    			if (detaching) detach(if_block_anchor);
+    		}
+    	};
+    }
+
+    // (139:2) {#if mailingURL}
+    function create_if_block_2$1(ctx) {
     	let div4;
     	let div3;
     	let div0;
     	let input;
     	let validate_action;
-    	let t1;
+    	let t0;
     	let div2;
     	let div1;
     	let button;
-    	let t2;
+    	let t1;
     	let button_disabled_value;
     	let mounted;
     	let dispose;
 
     	return {
     		c() {
-    			br = element("br");
-    			t0 = space();
     			div4 = element("div");
     			div3 = element("div");
     			div0 = element("div");
     			input = element("input");
-    			t1 = space();
+    			t0 = space();
     			div2 = element("div");
     			div1 = element("div");
     			button = element("button");
-    			t2 = text("Enviar");
+    			t1 = text("Send");
     			attr(input, "type", "email");
     			attr(input, "class", "form-control");
-    			attr(input, "placeholder", "Correo electrónico");
+    			attr(input, "placeholder", "User E-mail");
     			attr(div0, "class", "col-md-8 col-12");
     			attr(button, "type", "button");
     			attr(button, "class", "btn btn-success generate svelte-lhb2gh");
-    			button.disabled = button_disabled_value = !/*$validity*/ ctx[5].valid;
+    			button.disabled = button_disabled_value = !/*$validity*/ ctx[6].valid;
     			attr(div1, "class", "d-flex flex-row-reverse");
     			attr(div2, "class", "col-md-4 col-12");
     			attr(div3, "class", "row");
     			attr(div4, "class", "container");
     		},
     		m(target, anchor) {
-    			insert(target, br, anchor);
-    			insert(target, t0, anchor);
     			insert(target, div4, anchor);
     			append(div4, div3);
     			append(div3, div0);
     			append(div0, input);
-    			set_input_value(input, /*email*/ ctx[0]);
-    			append(div3, t1);
+    			set_input_value(input, /*email*/ ctx[1]);
+    			append(div3, t0);
     			append(div3, div2);
     			append(div2, div1);
     			append(div1, button);
-    			append(button, t2);
+    			append(button, t1);
 
     			if (!mounted) {
     				dispose = [
-    					action_destroyer(validate_action = /*validate*/ ctx[7].call(null, input, /*email*/ ctx[0])),
-    					listen(input, "input", /*input_input_handler*/ ctx[12]),
-    					listen(button, "click", /*click_handler_1*/ ctx[13])
+    					action_destroyer(validate_action = /*validate*/ ctx[8].call(null, input, /*email*/ ctx[1])),
+    					listen(input, "input", /*input_input_handler*/ ctx[13]),
+    					listen(button, "click", /*click_handler_1*/ ctx[14])
     				];
 
     				mounted = true;
     			}
     		},
     		p(ctx, dirty) {
-    			if (validate_action && is_function(validate_action.update) && dirty & /*email*/ 1) validate_action.update.call(null, /*email*/ ctx[0]);
+    			if (validate_action && is_function(validate_action.update) && dirty & /*email*/ 2) validate_action.update.call(null, /*email*/ ctx[1]);
 
-    			if (dirty & /*email*/ 1 && input.value !== /*email*/ ctx[0]) {
-    				set_input_value(input, /*email*/ ctx[0]);
+    			if (dirty & /*email*/ 2 && input.value !== /*email*/ ctx[1]) {
+    				set_input_value(input, /*email*/ ctx[1]);
     			}
 
-    			if (dirty & /*$validity*/ 32 && button_disabled_value !== (button_disabled_value = !/*$validity*/ ctx[5].valid)) {
+    			if (dirty & /*$validity*/ 64 && button_disabled_value !== (button_disabled_value = !/*$validity*/ ctx[6].valid)) {
     				button.disabled = button_disabled_value;
     			}
     		},
     		d(detaching) {
-    			if (detaching) detach(br);
-    			if (detaching) detach(t0);
     			if (detaching) detach(div4);
     			mounted = false;
     			run_all(dispose);
@@ -1010,7 +1054,7 @@
     	};
     }
 
-    // (160:1) {#if (isLoading)}
+    // (161:1) {#if (isLoading)}
     function create_if_block$1(ctx) {
     	let div1;
     	let div0;
@@ -1078,13 +1122,13 @@
     	let div6;
     	let div5;
     	let div4;
-    	let t10_value = /*messageSentResult*/ ctx[1].message + "";
+    	let t10_value = /*messageSentResult*/ ctx[2].message + "";
     	let t10;
     	let t11;
     	let button;
     	let div6_class_value;
     	let current;
-    	let each_value = /*estimates*/ ctx[3];
+    	let each_value = /*estimates*/ ctx[4];
     	let each_blocks = [];
 
     	for (let i = 0; i < each_value.length; i += 1) {
@@ -1095,20 +1139,20 @@
     		each_blocks[i] = null;
     	});
 
-    	let if_block0 = /*estimates*/ ctx[3].length == 0 && create_if_block_2$1();
+    	let if_block0 = /*estimates*/ ctx[4].length == 0 && create_if_block_3();
 
     	number = new Number({
-    			props: { number: /*total*/ ctx[4], locale: "en" }
+    			props: { number: /*total*/ ctx[5], locale: "en" }
     		});
 
-    	let if_block1 = /*estimates*/ ctx[3].length > 0 && create_if_block_1$1(ctx);
-    	let if_block2 = /*isLoading*/ ctx[2] && create_if_block$1();
+    	let if_block1 = /*estimates*/ ctx[4].length > 0 && create_if_block_1$1(ctx);
+    	let if_block2 = /*isLoading*/ ctx[3] && create_if_block$1();
 
     	return {
     		c() {
     			main = element("main");
     			h10 = element("h1");
-    			h10.textContent = "Estimado";
+    			h10.textContent = "Estimation";
     			t1 = space();
     			div3 = element("div");
 
@@ -1122,7 +1166,7 @@
     			div2 = element("div");
     			div1 = element("div");
     			div0 = element("div");
-    			div0.textContent = "Total estimado";
+    			div0.textContent = "Total estimation";
     			t5 = space();
     			h11 = element("h1");
     			create_component(number.$$.fragment);
@@ -1152,7 +1196,7 @@
     			attr(div5, "class", "d-flex");
     			attr(div6, "id", "liveToast");
 
-    			attr(div6, "class", div6_class_value = "toast align-items-center text-white bg-" + (/*messageSentResult*/ ctx[1].status
+    			attr(div6, "class", div6_class_value = "toast align-items-center text-white bg-" + (/*messageSentResult*/ ctx[2].status
     			? 'success'
     			: 'danger') + " border-0");
 
@@ -1199,8 +1243,8 @@
     			current = true;
     		},
     		p(ctx, [dirty]) {
-    			if (dirty & /*estimates, removeItem*/ 264) {
-    				each_value = /*estimates*/ ctx[3];
+    			if (dirty & /*estimates, removeItem*/ 528) {
+    				each_value = /*estimates*/ ctx[4];
     				let i;
 
     				for (i = 0; i < each_value.length; i += 1) {
@@ -1226,9 +1270,9 @@
     				check_outros();
     			}
 
-    			if (/*estimates*/ ctx[3].length == 0) {
+    			if (/*estimates*/ ctx[4].length == 0) {
     				if (if_block0) ; else {
-    					if_block0 = create_if_block_2$1();
+    					if_block0 = create_if_block_3();
     					if_block0.c();
     					if_block0.m(div3, t3);
     				}
@@ -1238,10 +1282,10 @@
     			}
 
     			const number_changes = {};
-    			if (dirty & /*total*/ 16) number_changes.number = /*total*/ ctx[4];
+    			if (dirty & /*total*/ 32) number_changes.number = /*total*/ ctx[5];
     			number.$set(number_changes);
 
-    			if (/*estimates*/ ctx[3].length > 0) {
+    			if (/*estimates*/ ctx[4].length > 0) {
     				if (if_block1) {
     					if_block1.p(ctx, dirty);
     				} else {
@@ -1254,9 +1298,9 @@
     				if_block1 = null;
     			}
 
-    			if (/*isLoading*/ ctx[2]) {
+    			if (/*isLoading*/ ctx[3]) {
     				if (if_block2) {
-    					if (dirty & /*isLoading*/ 4) {
+    					if (dirty & /*isLoading*/ 8) {
     						transition_in(if_block2, 1);
     					}
     				} else {
@@ -1275,9 +1319,9 @@
     				check_outros();
     			}
 
-    			if ((!current || dirty & /*messageSentResult*/ 2) && t10_value !== (t10_value = /*messageSentResult*/ ctx[1].message + "")) set_data(t10, t10_value);
+    			if ((!current || dirty & /*messageSentResult*/ 4) && t10_value !== (t10_value = /*messageSentResult*/ ctx[2].message + "")) set_data(t10, t10_value);
 
-    			if (!current || dirty & /*messageSentResult*/ 2 && div6_class_value !== (div6_class_value = "toast align-items-center text-white bg-" + (/*messageSentResult*/ ctx[1].status
+    			if (!current || dirty & /*messageSentResult*/ 4 && div6_class_value !== (div6_class_value = "toast align-items-center text-white bg-" + (/*messageSentResult*/ ctx[2].status
     			? 'success'
     			: 'danger') + " border-0")) {
     				attr(div6, "class", div6_class_value);
@@ -1316,31 +1360,30 @@
     	};
     }
 
-    const MAIL_URL = "your mail url to send estimate data";
-
     function instance$2($$self, $$props, $$invalidate) {
     	let estimates;
     	let total;
     	let isLoading;
     	let messageSentResult;
     	let $validity;
+    	let { mailingURL } = $$props;
     	const [validity, validate, resetValidation] = createFieldValidator(requiredValidator(), emailValidator());
-    	component_subscribe($$self, validity, value => $$invalidate(5, $validity = value));
+    	component_subscribe($$self, validity, value => $$invalidate(6, $validity = value));
     	let email;
 
     	const addToEstimate = estimate => {
-    		$$invalidate(4, total += estimate.item.total);
-    		$$invalidate(3, estimates = [...estimates, estimate]);
+    		$$invalidate(5, total += estimate.item.total);
+    		$$invalidate(4, estimates = [...estimates, estimate]);
     	};
 
     	function removeItem(i) {
-    		$$invalidate(4, total -= estimates[i].item.total);
+    		$$invalidate(5, total -= estimates[i].item.total);
     		estimates.splice(i, 1);
-    		$$invalidate(3, estimates);
+    		$$invalidate(4, estimates);
     	}
 
     	async function generate() {
-    		$$invalidate(2, isLoading = true);
+    		$$invalidate(3, isLoading = true);
     		let mailData = { total, items: [] };
 
     		for (var i in estimates) {
@@ -1365,16 +1408,16 @@
     			});
     		}
 
-    		const res = await fetch(MAIL_URL, {
+    		const res = await fetch(mailingURL, {
     			method: "POST",
     			body: JSON.stringify({ data: mailData, email })
     		}).catch(error => {
     			console.log(error);
-    			$$invalidate(2, isLoading = false);
+    			$$invalidate(3, isLoading = false);
     			showError();
     		});
 
-    		$$invalidate(2, isLoading = false);
+    		$$invalidate(3, isLoading = false);
     		const json = await res.json();
 
     		if (json.status) {
@@ -1385,16 +1428,16 @@
     	}
 
     	function showSuccess() {
-    		$$invalidate(1, messageSentResult.message = 'Mensaje enviado, te contactaremos pronto', messageSentResult);
-    		$$invalidate(1, messageSentResult.status = true, messageSentResult);
+    		$$invalidate(2, messageSentResult.message = 'Message sent, we will be in touch soon', messageSentResult);
+    		$$invalidate(2, messageSentResult.status = true, messageSentResult);
     		var toastLiveExample = document.getElementById('liveToast');
     		var toast = new bootstrap.Toast(toastLiveExample);
     		toast.show();
     	}
 
     	function showError() {
-    		$$invalidate(1, messageSentResult.message = 'Ha ocurrido un error al enviar, intentelo mas tarde', messageSentResult);
-    		$$invalidate(1, messageSentResult.status = false, messageSentResult);
+    		$$invalidate(2, messageSentResult.message = 'An error has occurred, try it later', messageSentResult);
+    		$$invalidate(2, messageSentResult.status = false, messageSentResult);
     		var toastLiveExample = document.getElementById('liveToast');
     		var toast = new bootstrap.Toast(toastLiveExample);
     		toast.show();
@@ -1404,16 +1447,22 @@
 
     	function input_input_handler() {
     		email = this.value;
-    		$$invalidate(0, email);
+    		$$invalidate(1, email);
     	}
 
     	const click_handler_1 = () => generate();
-    	$$invalidate(3, estimates = []);
-    	$$invalidate(4, total = 0);
-    	$$invalidate(2, isLoading = false);
-    	$$invalidate(1, messageSentResult = { status: true, message: '' });
+
+    	$$self.$$set = $$props => {
+    		if ('mailingURL' in $$props) $$invalidate(0, mailingURL = $$props.mailingURL);
+    	};
+
+    	$$invalidate(4, estimates = []);
+    	$$invalidate(5, total = 0);
+    	$$invalidate(3, isLoading = false);
+    	$$invalidate(2, messageSentResult = { status: true, message: '' });
 
     	return [
+    		mailingURL,
     		email,
     		messageSentResult,
     		isLoading,
@@ -1434,11 +1483,11 @@
     class Summary extends SvelteComponent {
     	constructor(options) {
     		super();
-    		init(this, options, instance$2, create_fragment$2, safe_not_equal, { addToEstimate: 10 });
+    		init(this, options, instance$2, create_fragment$2, safe_not_equal, { mailingURL: 0, addToEstimate: 11 });
     	}
 
     	get addToEstimate() {
-    		return this.$$.ctx[10];
+    		return this.$$.ctx[11];
     	}
     }
 
@@ -1529,40 +1578,48 @@
 
     /* src\ItemSelector.svelte generated by Svelte v3.44.0 */
 
+    const { document: document_1 } = globals;
+
     function get_each_context(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[15] = list[i];
-    	child_ctx[16] = list;
-    	child_ctx[17] = i;
+    	child_ctx[14] = list[i];
+    	child_ctx[15] = list;
+    	child_ctx[16] = i;
     	return child_ctx;
     }
 
     function get_each_context_1(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[18] = list[i][0];
-    	child_ctx[19] = list[i][1];
+    	child_ctx[17] = list[i][0];
+    	child_ctx[18] = list[i][1];
     	return child_ctx;
     }
 
     function get_each_context_2(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[22] = list[i];
+    	child_ctx[21] = list[i];
     	return child_ctx;
     }
 
-    // (104:2) {#if selected}
+    // (97:2) {#if selected}
     function create_if_block(ctx) {
     	let div1;
     	let div0;
     	let t0;
     	let div4;
     	let h3;
-    	let t1_value = /*selected*/ ctx[3].title + "";
+    	let t1_value = /*selected*/ ctx[2].title + "";
     	let t1;
     	let t2;
     	let div3;
     	let table;
     	let thead;
+    	let tr;
+    	let th0;
+    	let t3;
+    	let th1;
+    	let t4_value = /*selected*/ ctx[2].category_name + "";
+    	let t4;
     	let t5;
     	let tbody;
     	let t6;
@@ -1576,14 +1633,14 @@
     	let button;
     	let mounted;
     	let dispose;
-    	let each_value_2 = /*upgrades*/ ctx[4];
+    	let each_value_2 = /*upgrades*/ ctx[3];
     	let each_blocks_1 = [];
 
     	for (let i = 0; i < each_value_2.length; i += 1) {
     		each_blocks_1[i] = create_each_block_2(get_each_context_2(ctx, each_value_2, i));
     	}
 
-    	let each_value = /*selected*/ ctx[3].options;
+    	let each_value = /*selected*/ ctx[2].options;
     	let each_blocks = [];
 
     	for (let i = 0; i < each_value.length; i += 1) {
@@ -1591,7 +1648,7 @@
     	}
 
     	let if_block0 = /*showErrors*/ ctx[0] && create_if_block_2();
-    	let if_block1 = !/*selected*/ ctx[3].unique && create_if_block_1(ctx);
+    	let if_block1 = !/*selected*/ ctx[2].unique && create_if_block_1(ctx);
 
     	return {
     		c() {
@@ -1610,10 +1667,11 @@
     			div3 = element("div");
     			table = element("table");
     			thead = element("thead");
-
-    			thead.innerHTML = `<tr class="svelte-1oapiqr"><th class="svelte-1oapiqr"></th> 
-            <th class="svelte-1oapiqr">Calidad</th></tr>`;
-
+    			tr = element("tr");
+    			th0 = element("th");
+    			t3 = space();
+    			th1 = element("th");
+    			t4 = text(t4_value);
     			t5 = space();
     			tbody = element("tbody");
 
@@ -1632,16 +1690,19 @@
     			t10 = space();
     			div2 = element("div");
     			button = element("button");
-    			button.textContent = "Agregar";
+    			button.textContent = "Add to Estimate";
     			attr(div0, "class", "slider upgrades-slider");
     			attr(div1, "id", "slider-container");
+    			attr(th0, "class", "svelte-vvb7pg");
+    			attr(th1, "class", "svelte-vvb7pg");
+    			attr(tr, "class", "svelte-vvb7pg");
     			attr(table, "class", "h-100 w-100");
     			attr(button, "type", "button");
-    			attr(button, "class", "btn btn-primary add-to-estimate svelte-1oapiqr");
+    			attr(button, "class", "btn btn-primary add-to-estimate svelte-vvb7pg");
     			attr(div3, "id", "form-container");
-    			attr(div3, "class", "svelte-1oapiqr");
+    			attr(div3, "class", "svelte-vvb7pg");
     			attr(div4, "id", "upgrade-content");
-    			attr(div4, "class", "svelte-1oapiqr");
+    			attr(div4, "class", "svelte-vvb7pg");
     		},
     		m(target, anchor) {
     			insert(target, div1, anchor);
@@ -1659,6 +1720,11 @@
     			append(div4, div3);
     			append(div3, table);
     			append(table, thead);
+    			append(thead, tr);
+    			append(tr, th0);
+    			append(tr, t3);
+    			append(tr, th1);
+    			append(th1, t4);
     			append(table, t5);
     			append(table, tbody);
 
@@ -1679,13 +1745,13 @@
     			append(div2, button);
 
     			if (!mounted) {
-    				dispose = listen(button, "click", /*click_handler_1*/ ctx[11]);
+    				dispose = listen(button, "click", /*click_handler_1*/ ctx[10]);
     				mounted = true;
     			}
     		},
     		p(ctx, dirty) {
-    			if (dirty & /*selectUpgrade, upgrades*/ 48) {
-    				each_value_2 = /*upgrades*/ ctx[4];
+    			if (dirty & /*selectUpgrade, upgrades*/ 24) {
+    				each_value_2 = /*upgrades*/ ctx[3];
     				let i;
 
     				for (i = 0; i < each_value_2.length; i += 1) {
@@ -1707,10 +1773,11 @@
     				each_blocks_1.length = each_value_2.length;
     			}
 
-    			if (dirty & /*selected*/ 8 && t1_value !== (t1_value = /*selected*/ ctx[3].title + "")) set_data(t1, t1_value);
+    			if (dirty & /*selected*/ 4 && t1_value !== (t1_value = /*selected*/ ctx[2].title + "")) set_data(t1, t1_value);
+    			if (dirty & /*selected*/ 4 && t4_value !== (t4_value = /*selected*/ ctx[2].category_name + "")) set_data(t4, t4_value);
 
-    			if (dirty & /*selected, Object*/ 8) {
-    				each_value = /*selected*/ ctx[3].options;
+    			if (dirty & /*selected, Object*/ 4) {
+    				each_value = /*selected*/ ctx[2].options;
     				let i;
 
     				for (i = 0; i < each_value.length; i += 1) {
@@ -1743,7 +1810,7 @@
     				if_block0 = null;
     			}
 
-    			if (!/*selected*/ ctx[3].unique) {
+    			if (!/*selected*/ ctx[2].unique) {
     				if (if_block1) {
     					if_block1.p(ctx, dirty);
     				} else {
@@ -1770,7 +1837,7 @@
     	};
     }
 
-    // (107:6) {#each upgrades as upgrade}
+    // (100:6) {#each upgrades as upgrade}
     function create_each_block_2(ctx) {
     	let div2;
     	let div1;
@@ -1779,7 +1846,7 @@
     	let img_alt_value;
     	let t0;
     	let div0;
-    	let t1_value = /*upgrade*/ ctx[22].name + "";
+    	let t1_value = /*upgrade*/ ctx[21].name + "";
     	let t1;
     	let div1_class_value;
     	let t2;
@@ -1787,7 +1854,7 @@
     	let dispose;
 
     	function click_handler() {
-    		return /*click_handler*/ ctx[8](/*upgrade*/ ctx[22]);
+    		return /*click_handler*/ ctx[7](/*upgrade*/ ctx[21]);
     	}
 
     	return {
@@ -1799,11 +1866,11 @@
     			div0 = element("div");
     			t1 = text(t1_value);
     			t2 = space();
-    			if (!src_url_equal(img.src, img_src_value = /*upgrade*/ ctx[22].icon)) attr(img, "src", img_src_value);
-    			attr(img, "alt", img_alt_value = /*upgrade*/ ctx[22].name);
-    			attr(img, "class", "svelte-1oapiqr");
-    			attr(div0, "class", "svelte-1oapiqr");
-    			attr(div1, "class", div1_class_value = "upgrade-element " + (/*upgrade*/ ctx[22].selected ? 'selected' : '') + " svelte-1oapiqr");
+    			if (!src_url_equal(img.src, img_src_value = /*upgrade*/ ctx[21].icon)) attr(img, "src", img_src_value);
+    			attr(img, "alt", img_alt_value = /*upgrade*/ ctx[21].name);
+    			attr(img, "class", "svelte-vvb7pg");
+    			attr(div0, "class", "svelte-vvb7pg");
+    			attr(div1, "class", div1_class_value = "upgrade-element " + (/*upgrade*/ ctx[21].selected ? 'selected' : '') + " svelte-vvb7pg");
     			attr(div2, "class", "d-flex justify-content-center");
     		},
     		m(target, anchor) {
@@ -1823,17 +1890,17 @@
     		p(new_ctx, dirty) {
     			ctx = new_ctx;
 
-    			if (dirty & /*upgrades*/ 16 && !src_url_equal(img.src, img_src_value = /*upgrade*/ ctx[22].icon)) {
+    			if (dirty & /*upgrades*/ 8 && !src_url_equal(img.src, img_src_value = /*upgrade*/ ctx[21].icon)) {
     				attr(img, "src", img_src_value);
     			}
 
-    			if (dirty & /*upgrades*/ 16 && img_alt_value !== (img_alt_value = /*upgrade*/ ctx[22].name)) {
+    			if (dirty & /*upgrades*/ 8 && img_alt_value !== (img_alt_value = /*upgrade*/ ctx[21].name)) {
     				attr(img, "alt", img_alt_value);
     			}
 
-    			if (dirty & /*upgrades*/ 16 && t1_value !== (t1_value = /*upgrade*/ ctx[22].name + "")) set_data(t1, t1_value);
+    			if (dirty & /*upgrades*/ 8 && t1_value !== (t1_value = /*upgrade*/ ctx[21].name + "")) set_data(t1, t1_value);
 
-    			if (dirty & /*upgrades*/ 16 && div1_class_value !== (div1_class_value = "upgrade-element " + (/*upgrade*/ ctx[22].selected ? 'selected' : '') + " svelte-1oapiqr")) {
+    			if (dirty & /*upgrades*/ 8 && div1_class_value !== (div1_class_value = "upgrade-element " + (/*upgrade*/ ctx[21].selected ? 'selected' : '') + " svelte-vvb7pg")) {
     				attr(div1, "class", div1_class_value);
     			}
     		},
@@ -1845,10 +1912,10 @@
     	};
     }
 
-    // (143:16) {#each Object.entries(option.category) as [type, price]}
+    // (136:16) {#each Object.entries(option.category) as [type, price]}
     function create_each_block_1(ctx) {
     	let option;
-    	let t_value = /*option*/ ctx[15].category[/*type*/ ctx[18]].label + "";
+    	let t_value = /*option*/ ctx[14].category[/*type*/ ctx[17]].label + "";
     	let t;
     	let option_value_value;
 
@@ -1856,7 +1923,7 @@
     		c() {
     			option = element("option");
     			t = text(t_value);
-    			option.__value = option_value_value = /*type*/ ctx[18];
+    			option.__value = option_value_value = /*type*/ ctx[17];
     			option.value = option.__value;
     		},
     		m(target, anchor) {
@@ -1864,9 +1931,9 @@
     			append(option, t);
     		},
     		p(ctx, dirty) {
-    			if (dirty & /*selected*/ 8 && t_value !== (t_value = /*option*/ ctx[15].category[/*type*/ ctx[18]].label + "")) set_data(t, t_value);
+    			if (dirty & /*selected*/ 4 && t_value !== (t_value = /*option*/ ctx[14].category[/*type*/ ctx[17]].label + "")) set_data(t, t_value);
 
-    			if (dirty & /*selected, Object*/ 8 && option_value_value !== (option_value_value = /*type*/ ctx[18])) {
+    			if (dirty & /*selected, Object*/ 4 && option_value_value !== (option_value_value = /*type*/ ctx[17])) {
     				option.__value = option_value_value;
     				option.value = option.__value;
     			}
@@ -1877,11 +1944,11 @@
     	};
     }
 
-    // (135:10) {#each selected.options as option}
+    // (128:10) {#each selected.options as option}
     function create_each_block(ctx) {
     	let tr;
     	let td0;
-    	let t0_value = /*option*/ ctx[15].description + "";
+    	let t0_value = /*option*/ ctx[14].description + "";
     	let t0;
     	let t1;
     	let td1;
@@ -1889,7 +1956,7 @@
     	let t2;
     	let mounted;
     	let dispose;
-    	let each_value_1 = Object.entries(/*option*/ ctx[15].category);
+    	let each_value_1 = Object.entries(/*option*/ ctx[14].category);
     	let each_blocks = [];
 
     	for (let i = 0; i < each_value_1.length; i += 1) {
@@ -1897,7 +1964,7 @@
     	}
 
     	function select_change_handler() {
-    		/*select_change_handler*/ ctx[9].call(select, /*each_value*/ ctx[16], /*option_index*/ ctx[17]);
+    		/*select_change_handler*/ ctx[8].call(select, /*each_value*/ ctx[15], /*option_index*/ ctx[16]);
     	}
 
     	return {
@@ -1914,11 +1981,11 @@
     			}
 
     			t2 = space();
-    			attr(td0, "class", "svelte-1oapiqr");
-    			attr(select, "class", "form-control svelte-1oapiqr");
-    			if (/*option*/ ctx[15].selected === void 0) add_render_callback(select_change_handler);
-    			attr(td1, "class", "svelte-1oapiqr");
-    			attr(tr, "class", "svelte-1oapiqr");
+    			attr(td0, "class", "svelte-vvb7pg");
+    			attr(select, "class", "form-control svelte-vvb7pg");
+    			if (/*option*/ ctx[14].selected === void 0) add_render_callback(select_change_handler);
+    			attr(td1, "class", "svelte-vvb7pg");
+    			attr(tr, "class", "svelte-vvb7pg");
     		},
     		m(target, anchor) {
     			insert(target, tr, anchor);
@@ -1932,7 +1999,7 @@
     				each_blocks[i].m(select, null);
     			}
 
-    			select_option(select, /*option*/ ctx[15].selected);
+    			select_option(select, /*option*/ ctx[14].selected);
     			append(tr, t2);
 
     			if (!mounted) {
@@ -1942,10 +2009,10 @@
     		},
     		p(new_ctx, dirty) {
     			ctx = new_ctx;
-    			if (dirty & /*selected*/ 8 && t0_value !== (t0_value = /*option*/ ctx[15].description + "")) set_data(t0, t0_value);
+    			if (dirty & /*selected*/ 4 && t0_value !== (t0_value = /*option*/ ctx[14].description + "")) set_data(t0, t0_value);
 
-    			if (dirty & /*Object, selected*/ 8) {
-    				each_value_1 = Object.entries(/*option*/ ctx[15].category);
+    			if (dirty & /*Object, selected*/ 4) {
+    				each_value_1 = Object.entries(/*option*/ ctx[14].category);
     				let i;
 
     				for (i = 0; i < each_value_1.length; i += 1) {
@@ -1967,8 +2034,8 @@
     				each_blocks.length = each_value_1.length;
     			}
 
-    			if (dirty & /*selected, Object*/ 8) {
-    				select_option(select, /*option*/ ctx[15].selected);
+    			if (dirty & /*selected, Object*/ 4) {
+    				select_option(select, /*option*/ ctx[14].selected);
     			}
     		},
     		d(detaching) {
@@ -1980,7 +2047,7 @@
     	};
     }
 
-    // (154:6) {#if (showErrors)}
+    // (147:6) {#if (showErrors)}
     function create_if_block_2(ctx) {
     	let div;
 
@@ -2000,14 +2067,14 @@
     	};
     }
 
-    // (159:6) {#if (!selected.unique)}
+    // (152:6) {#if (!selected.unique)}
     function create_if_block_1(ctx) {
     	let div;
     	let label;
-    	let t0_value = /*measure*/ ctx[2].name + "";
+    	let t0_value = /*selected*/ ctx[2].measure.name + "";
     	let t0;
     	let t1;
-    	let t2_value = /*measure*/ ctx[2].short_name + "";
+    	let t2_value = /*selected*/ ctx[2].measure.short_name + "";
     	let t2;
     	let t3;
     	let t4;
@@ -2030,7 +2097,7 @@
     			attr(input, "type", "number");
     			attr(input, "class", "form-control");
     			attr(input, "id", "square-meters");
-    			attr(input, "placeholder", input_placeholder_value = /*measure*/ ctx[2].short_name);
+    			attr(input, "placeholder", input_placeholder_value = /*selected*/ ctx[2].measure.short_name);
     			attr(div, "class", "form-group");
     		},
     		m(target, anchor) {
@@ -2045,15 +2112,15 @@
     			set_input_value(input, /*quantity*/ ctx[1]);
 
     			if (!mounted) {
-    				dispose = listen(input, "input", /*input_input_handler*/ ctx[10]);
+    				dispose = listen(input, "input", /*input_input_handler*/ ctx[9]);
     				mounted = true;
     			}
     		},
     		p(ctx, dirty) {
-    			if (dirty & /*measure*/ 4 && t0_value !== (t0_value = /*measure*/ ctx[2].name + "")) set_data(t0, t0_value);
-    			if (dirty & /*measure*/ 4 && t2_value !== (t2_value = /*measure*/ ctx[2].short_name + "")) set_data(t2, t2_value);
+    			if (dirty & /*selected*/ 4 && t0_value !== (t0_value = /*selected*/ ctx[2].measure.name + "")) set_data(t0, t0_value);
+    			if (dirty & /*selected*/ 4 && t2_value !== (t2_value = /*selected*/ ctx[2].measure.short_name + "")) set_data(t2, t2_value);
 
-    			if (dirty & /*measure*/ 4 && input_placeholder_value !== (input_placeholder_value = /*measure*/ ctx[2].short_name)) {
+    			if (dirty & /*selected, Object*/ 4 && input_placeholder_value !== (input_placeholder_value = /*selected*/ ctx[2].measure.short_name)) {
     				attr(input, "placeholder", input_placeholder_value);
     			}
 
@@ -2071,19 +2138,26 @@
 
     function create_fragment$1(ctx) {
     	let main;
-    	let if_block = /*selected*/ ctx[3] && create_if_block(ctx);
+    	let t0;
+    	let style;
+    	let if_block = /*selected*/ ctx[2] && create_if_block(ctx);
 
     	return {
     		c() {
     			main = element("main");
     			if (if_block) if_block.c();
+    			t0 = space();
+    			style = element("style");
+    			style.textContent = ".slider button {\r\n      position: absolute;\r\n      background: white;\r\n      border: none;\r\n      z-index: 100;\r\n    }\r\n    .slick-prev {\r\n      left: 0;\r\n      top: 0px;\r\n      bottom: 0px;\r\n    }\r\n\r\n    .slick-next {\r\n      right: 0;\r\n      top: 0px;\r\n      bottom: 0px;\r\n    }";
     		},
     		m(target, anchor) {
     			insert(target, main, anchor);
     			if (if_block) if_block.m(main, null);
+    			insert(target, t0, anchor);
+    			append(document_1.head, style);
     		},
     		p(ctx, [dirty]) {
-    			if (/*selected*/ ctx[3]) {
+    			if (/*selected*/ ctx[2]) {
     				if (if_block) {
     					if_block.p(ctx, dirty);
     				} else {
@@ -2101,6 +2175,8 @@
     		d(detaching) {
     			if (detaching) detach(main);
     			if (if_block) if_block.d();
+    			if (detaching) detach(t0);
+    			detach(style);
     		}
     	};
     }
@@ -2111,7 +2187,6 @@
     	let { data } = $$props;
     	let showErrors = false;
     	let quantity;
-    	let measure;
     	var selected;
     	var upgrades = data;
 
@@ -2125,7 +2200,7 @@
 
     	function unselectAllUpgrades() {
     		for (var i in upgrades) {
-    			$$invalidate(4, upgrades[i].selected = false, upgrades);
+    			$$invalidate(3, upgrades[i].selected = false, upgrades);
     		}
     	}
 
@@ -2134,16 +2209,12 @@
     		upgrade.selected = true;
     		let _upgrade = JSON.parse(JSON.stringify(upgrade));
 
-    		$$invalidate(2, measure = {
-    			name: _upgrade.measure.name,
-    			short_name: _upgrade.measure.short_name
-    		});
-
-    		$$invalidate(3, selected = {
+    		$$invalidate(2, selected = {
     			title: _upgrade.title,
     			options: _upgrade.items,
     			unique: _upgrade.unique,
-    			measure: measure.short_name
+    			measure: _upgrade.measure,
+    			category_name: _upgrade.category_name
     		});
     	}
 
@@ -2160,7 +2231,7 @@
     		for (var i in selected.options) {
     			let selectedOption = selected.options[i].selected;
     			let category = selected.options[i].category[selectedOption];
-    			$$invalidate(3, selected.options[i].category_name = category.label, selected);
+    			$$invalidate(2, selected.options[i].category_name = category.label, selected);
 
     			category.price_ranges.forEach(function (range) {
     				let currentMin = quantity - (range.from_quantity ?? 0);
@@ -2176,7 +2247,7 @@
     			});
     		}
 
-    		$$invalidate(3, selected.total = total, selected);
+    		$$invalidate(2, selected.total = total, selected);
     		let item = JSON.parse(JSON.stringify(selected));
 
     		if (selected.unique) {
@@ -2198,7 +2269,7 @@
 
     	function select_change_handler(each_value, option_index) {
     		each_value[option_index].selected = select_value(this);
-    		$$invalidate(3, selected);
+    		$$invalidate(2, selected);
     	}
 
     	function input_input_handler() {
@@ -2209,13 +2280,12 @@
     	const click_handler_1 = () => addUpgradeToEstimate();
 
     	$$self.$$set = $$props => {
-    		if ('data' in $$props) $$invalidate(7, data = $$props.data);
+    		if ('data' in $$props) $$invalidate(6, data = $$props.data);
     	};
 
     	return [
     		showErrors,
     		quantity,
-    		measure,
     		selected,
     		upgrades,
     		selectUpgrade,
@@ -2231,7 +2301,7 @@
     class ItemSelector extends SvelteComponent {
     	constructor(options) {
     		super();
-    		init(this, options, instance$1, create_fragment$1, safe_not_equal, { data: 7 });
+    		init(this, options, instance$1, create_fragment$1, safe_not_equal, { data: 6 });
     	}
     }
 
@@ -2248,10 +2318,10 @@
     	let summary;
     	let current;
     	itemselector = new ItemSelector({ props: { data: /*data*/ ctx[0] } });
-    	itemselector.$on("newEstimate", /*whenNewEstimate*/ ctx[2]);
-    	let summary_props = {};
+    	itemselector.$on("newEstimate", /*whenNewEstimate*/ ctx[3]);
+    	let summary_props = { mailingURL: /*mailingURL*/ ctx[1] };
     	summary = new Summary({ props: summary_props });
-    	/*summary_binding*/ ctx[3](summary);
+    	/*summary_binding*/ ctx[4](summary);
 
     	return {
     		c() {
@@ -2285,6 +2355,7 @@
     			if (dirty & /*data*/ 1) itemselector_changes.data = /*data*/ ctx[0];
     			itemselector.$set(itemselector_changes);
     			const summary_changes = {};
+    			if (dirty & /*mailingURL*/ 2) summary_changes.mailingURL = /*mailingURL*/ ctx[1];
     			summary.$set(summary_changes);
     		},
     		i(local) {
@@ -2301,7 +2372,7 @@
     		d(detaching) {
     			if (detaching) detach(main);
     			destroy_component(itemselector);
-    			/*summary_binding*/ ctx[3](null);
+    			/*summary_binding*/ ctx[4](null);
     			destroy_component(summary);
     		}
     	};
@@ -2310,26 +2381,28 @@
     function instance($$self, $$props, $$invalidate) {
     	let estimate;
     	let { data } = $$props;
+    	let { mailingURL } = $$props;
     	const whenNewEstimate = event => estimate.addToEstimate(event.detail);
 
     	function summary_binding($$value) {
     		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
     			estimate = $$value;
-    			$$invalidate(1, estimate);
+    			$$invalidate(2, estimate);
     		});
     	}
 
     	$$self.$$set = $$props => {
     		if ('data' in $$props) $$invalidate(0, data = $$props.data);
+    		if ('mailingURL' in $$props) $$invalidate(1, mailingURL = $$props.mailingURL);
     	};
 
-    	return [data, estimate, whenNewEstimate, summary_binding];
+    	return [data, mailingURL, estimate, whenNewEstimate, summary_binding];
     }
 
     class PriceEstimate extends SvelteComponent {
     	constructor(options) {
     		super();
-    		init(this, options, instance, create_fragment, safe_not_equal, { data: 0 });
+    		init(this, options, instance, create_fragment, safe_not_equal, { data: 0, mailingURL: 1 });
     	}
     }
 
