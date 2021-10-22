@@ -1,8 +1,11 @@
 <script>
-	import Estimate from "./Estimate.svelte";
-	import UpdateCalculator from "./UpdateCalculator.svelte";
+	import Summary from "./Summary.svelte";
+	import ItemSelector from "./ItemSelector.svelte";
 
 	let estimate;
+	export let data;
+	export let mailingURL;
+ 
 
 	const whenNewEstimate = (event) => estimate.addToEstimate(event.detail);
 
@@ -14,10 +17,10 @@
 	<div class="container">
 		<div class="row">
 		  <div class="col-md-6 col-12">
-			<UpdateCalculator on:newEstimate={whenNewEstimate} />
+			<ItemSelector on:newEstimate={whenNewEstimate} data={data}/>
 		  </div>
 		  <div class="col-md-6  col-12">
-			<Estimate bind:this="{estimate}" />
+			<Summary bind:this="{estimate}" mailingURL={mailingURL} />
 		  </div>
 		</div>
 	</div>

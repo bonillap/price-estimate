@@ -1,30 +1,19 @@
 <script>
   import { onMount } from 'svelte'
   import { createEventDispatcher } from 'svelte'
-  import { data } from './data/sample'
   import sliderConfig from './helpers/sliderConfig'
 
 	const jq = window.$;
 
   const dispatch = createEventDispatcher();
 
+	export let data;
+
   let showErrors = false;
   let quantity;
 
+  var selected;
 
-
-  let measure;
-
-  var selected = {
-    title: '',
-    unique: true,
-    options: []
-  };
-
-  var aditional = {
-    medium : 450,
-    high: 580
-  };
 
 	var upgrades = data;
 
@@ -49,12 +38,9 @@
     let _upgrade =  JSON.parse(JSON.stringify(upgrade)); 
 
     
-    measure = {
-      name : _upgrade.measure.name,
-      short_name: _upgrade.measure.short_name
-    };
+    
 
-    selected = {title: _upgrade.title, options: _upgrade.items, unique: _upgrade.unique, measure: measure.short_name };
+    selected = {title: _upgrade.title, options: _upgrade.items, unique: _upgrade.unique, measure: _upgrade.measure, category_name: _upgrade.category_name };
 
   }
   
@@ -108,12 +94,13 @@
 </script>
 
 <main>
+  {#if selected}
   <div id="slider-container">
     <div class="slider upgrades-slider">
       {#each upgrades as upgrade}
       <div class="d-flex justify-content-center" on:click={() => selectUpgrade(upgrade)}>
         <div class="upgrade-element {upgrade.selected ? 'selected':''}">
-          <img src="/icons/{upgrade.icon}" alt="{upgrade.name}"/>
+          <img src="{upgrade.icon}" alt="{upgrade.name}"/>
           <div>{upgrade.name}</div>
           
         </div>
@@ -121,16 +108,20 @@
       {/each}
     </div>
   </div>
+
+
+
+
+
+
   <div id="upgrade-content">
     <h3>{selected.title}</h3>
-    
     <div id="form-container">
-
       <table class="h-100 w-100">
         <thead>
           <tr>
             <th></th>
-            <th>Calidad</th>
+            <th>{selected.category_name}</th>
           </tr>
         </thead>
         <tbody>
@@ -151,8 +142,6 @@
           {/each}
         </tbody>
       </table>
-
-
       <br>
       <br>
       {#if (showErrors)}
@@ -160,24 +149,18 @@
         <strong>¡Campo requerido!</strong> Es necesario ingresar la cantidad
       </div>
       {/if}
-
       {#if (!selected.unique)}
       <div class="form-group">
-        <label for="square-meters">{measure.name} ({measure.short_name})</label>
-        <input type="number" class="form-control" id="square-meters" placeholder="{measure.short_name}" bind:value={quantity}>
+        <label for="square-meters">{selected.measure.name} ({selected.measure.short_name})</label>
+        <input type="number" class="form-control" id="square-meters" placeholder="{selected.measure.short_name}" bind:value={quantity}>
       </div>
       {/if}
-
       <div>
-        <button type="button" class="btn btn-primary add-to-estimate"  on:click={() => addUpgradeToEstimate()}>Agregar</button>
+        <button type="button" class="btn btn-primary add-to-estimate"  on:click={() => addUpgradeToEstimate()}>Add to Estimate</button>
       </div>
-
-
-
-
     </div>
-
   </div>
+  {/if}
 </main>
 
 <style>
@@ -243,11 +226,33 @@
   #form-container table tr td {
     padding-top: 8px;
     padding-bottom: 8px;
-    /*text-align: center !important; */
   }
 
   .add-to-estimate {
     float: right;
     margin-top: 20px;
   }
+
 </style>
+
+<svelte:head>
+  <style>
+    .slider button {
+      position: absolute;
+      background: white;
+      border: none;
+      z-index: 100;
+    }
+    .slick-prev {
+      left: 0;
+      top: 0px;
+      bottom: 0px;
+    }
+
+    .slick-next {
+      right: 0;
+      top: 0px;
+      bottom: 0px;
+    }
+  </style>
+</svelte:head>

@@ -1,10 +1,10 @@
 <script>
-import Number from "./components/Number.svelte";
 import { Jumper } from 'svelte-loading-spinners'
+import Number from "./components/Number.svelte";
 import { emailValidator, requiredValidator } from './helpers/validators.js'
 import { createFieldValidator } from './helpers/validation.js'
 
-	const MAIL_URL = "your mail url to send estimate data";
+	export let mailingURL;
 	const [ validity, validate, resetValidation ] = createFieldValidator(requiredValidator(), emailValidator())
 
 
@@ -47,7 +47,7 @@ import { createFieldValidator } from './helpers/validation.js'
 		}
 
         const res = await fetch(
-            MAIL_URL,
+            mailingURL,
             {
                 method: "POST",
                 body: JSON.stringify({
@@ -73,7 +73,7 @@ import { createFieldValidator } from './helpers/validation.js'
 	}
 
 	function showSuccess() {
-		messageSentResult.message = 'Mensaje enviado, te contactaremos pronto';
+		messageSentResult.message = 'Message sent, we will be in touch soon';
 		messageSentResult.status = true;
 		var toastLiveExample = document.getElementById('liveToast')
 		var toast = new bootstrap.Toast(toastLiveExample);
@@ -81,7 +81,7 @@ import { createFieldValidator } from './helpers/validation.js'
 	}
 
 	function showError() {
-		messageSentResult.message = 'Ha ocurrido un error al enviar, intentelo mas tarde';
+		messageSentResult.message = 'An error has occurred, try it later';
 		messageSentResult.status = false;
 		var toastLiveExample = document.getElementById('liveToast')
 		var toast = new bootstrap.Toast(toastLiveExample);
@@ -92,13 +92,13 @@ import { createFieldValidator } from './helpers/validation.js'
 </script>
 
 <main id="estimateContent">
-	<h1>Estimado</h1>
+	<h1>Estimation</h1>
 	
 	<div class="estimate-container">
 		{#each estimates as estimate, i}
 		<div class="estimate-item">			
 			<table>
-				<th>{estimate.item.title} ({estimate.quantity}{estimate.item.measure})</th>
+				<th>{estimate.item.title} ({estimate.quantity}{estimate.item.measure.short_name})</th>
 				<th style="text-align:right">
 					<button type="button" class="close" data-dismiss="alert" aria-label="Close"  on:click={() => removeItem(i)}>
 						<span aria-hidden="true">&times;</span>
@@ -121,12 +121,12 @@ import { createFieldValidator } from './helpers/validation.js'
 		{/each}
 
 		{#if (estimates.length == 0)}
-		<div class="no-items-text">Aun no hay items agregados al estimado</div>
+		<div class="no-items-text">No items added to estimate, yet</div>
 		{/if}
 
 		<div class="d-flex justify-content-center">
 			<div class="estimate-total shadow-sm p-3">
-				<div>Total estimado</div>
+				<div>Total estimation</div>
 				<h1><Number number={total} locale="en"/> €</h1>
 			</div>
 		</div>
@@ -136,19 +136,20 @@ import { createFieldValidator } from './helpers/validation.js'
 
 
 		<br>
+		{#if mailingURL}
 		<div class="container">
 			<div class="row">
 			  <div class="col-md-8 col-12">
-				<input type="email" class="form-control" placeholder="Correo electrónico" use:validate={email} bind:value={email}>
+				<input type="email" class="form-control" placeholder="User E-mail" use:validate={email} bind:value={email}>
 			  </div>
 			  <div class="col-md-4  col-12">
 				<div class="d-flex flex-row-reverse">
-					<button type="button" class="btn btn-success generate" disabled={!$validity.valid} on:click={() => generate()}>Enviar</button>
+					<button type="button" class="btn btn-success generate" disabled={!$validity.valid} on:click={() => generate()}>Send</button>
 				</div>
 			  </div>
 			</div>
 		</div>
-
+		{/if}
 
 
 
