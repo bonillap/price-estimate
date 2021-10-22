@@ -1,6 +1,6 @@
 
 
-<h1 align="center">Estimate svelte module</h1>
+<h1 align="center">Estimate Svelte Module</h1>
 
 <!--div align="center">
 
