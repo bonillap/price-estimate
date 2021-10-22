@@ -25,11 +25,11 @@ npm i svelte-price-estimate
 ```
 
 And import these js and css in your index.html :
-- bootstrap, only for styles
-- jquery, we need to slik to work
-- slick, carousel for category selector
+- bootstrap, only for styles and icons
+- jquery, we need jquery for slik to work
+- slick, carousel for category selector => *js* and *css*
 
-___You can check this sample app <a href="https://github.com/bonillap/price-estimate-test">here</a> and check how it works___
+___You can check this sample app <a href="https://github.com/bonillap/price-estimate-test">here</a> and check <a href="https://github.com/bonillap/price-estimate-test/blob/main/public/index.html">index.html</a> for more info___
 
 ## ▶️ Running <a name = "running"></a>
 
@@ -41,7 +41,7 @@ Add the component tag inside your html
 ```html
 <PriceEstimate data={data} mailingURL={mail}></PriceEstimate>
 ```
-The "data" attribute is explained below and the "mailingURL" is the URL of your endpoint or service to process the estimate data with the email that users set in the email field. 
+The "data" attribute is explained below (with example) and the "mailingURL" is the URL of your endpoint or service to process the estimate data with the email that users input in the email field (if mailingURL is set).
 
 Then, you can access it by default in http://localhost:5000 and watch the app running with changes in real time. You can check this <a>sample</a> repository.
 
@@ -58,7 +58,7 @@ Then, you can access it by default in http://localhost:5000 and watch the app ru
 The data field in PriceEstimate is defined as an array. This is an example:
 
 ```javascript
-[
+let data = [
     {
       icon: 'assets/icons/clean.png', 
       name: 'Bathroom', 
@@ -185,7 +185,7 @@ The data field in PriceEstimate is defined as an array. This is an example:
         }
       ]
     }
-]
+];
 ```
 This sample shows something like this:
 ![ScreenShot](https://raw.github.com/bonillap/price-estimate/master/screenshots/estimate1.jpg)

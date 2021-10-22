@@ -1,6 +1,6 @@
 {
   "name": "svelte-price-estimate",
-  "version": "0.4.0",
+  "version": "0.4.2",
   "description": "An easy way to show and manage your price estimation for your Svelte project",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -37,7 +37,9 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-svelte": "^7.1.0",
     "rollup-plugin-css-only": "^3.1.0",
-    "svelte": "^3.44.0",
+    "svelte": "^3.44.0"
+  },
+  "dependencies": {
     "svelte-loading-spinners": "^0.1.7"
   }
 }
