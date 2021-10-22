@@ -1,6 +1,6 @@
 
 
-<h1 align="center">Project Title</h1>
+<h1 align="center">Estimate svelte module</h1>
 
 <!--div align="center">
 
@@ -11,7 +11,7 @@
 
 </div-->
 
-<p align="justify"> This is a sample application for those who needs an easy way to show a basic estimate of their services or products. It works with dynamic content, dynamic estimate list, estimate resume and email validator. Just like the price calculator from <a href="https://cloud.google.com/products/calculator">here </a> (kind of 😆). I know there is a lot to work to do.
+<p align="justify"> This is a module for those who needs an easy way to show a basic estimate of their services or products. It works with dynamic content, dynamic estimate list, estimate resume and email validator. Just like the price calculator from <a href="https://cloud.google.com/products/calculator">here </a> (kind of 😆). I know there is a lot to work to do.
     <br> 
 </p>
 
@@ -187,5 +187,52 @@ The data field in PriceEstimate is defined as an array. This is an example:
 This sample shows something like this:
 ![ScreenShot](https://raw.github.com/bonillap/price-estimate/master/screenshots/estimate1.jpg)
 
-It's look pretty ugly and complex, but is pretty easy to understand:
-- First, every item in the array is a category
+It looks complex, but is pretty easy to understand:
+- Every item in the array is a section.
+- Every section has list of items.
+- Every item has a category that can be dinamically set as a group of price range.
+
+```yaml
+
+icon: Icon of the section, 
+name: Short name below icon, 
+title: Full name of the section,
+category_name: Column name for the selectors,
+unique: 'true' if only one price applies or 'false' if we need to process the quantity,
+measure: 
+    name : Metering name ex=(meters, foot, unit...), 
+    short_name: Short name ex=(m2, ft, ud...)
+items:
+    description: Item name or description (row in table)
+    category: You can set any identifier for the category
+        label: Option in the selector
+        price_ranges: This array has to be in order
+            from_quantity: Minimum quantity to evaluate
+            to_quantity: Maximum quantity to evaluate
+            price: Price of the step
+            step: Quantity in this range will be multiply by step
+
+```
+
+## 🎓 Considerations <a name = "considerations"></a>
+
+- with unique value set true, we can manage 1 price. That means, a section has no quantity because it is an one life time payment:
+```
+price_ranges: [
+    { price: 120, step: 1}
+]
+```
+- with unique value set false, you can play more.
+```
+price_ranges: [
+    {from_quantity:0, to_quantity: 6, price: 1230, step: 6},
+    {from_quantity:6, price: 200, step: 1}
+]
+```
+With this definition of price ranges, you can set a quantity. This quantity will be distribute. For example, I want 7 of this section. so, 7 fill the first range, because 0 < 7 < 6, so we have actually 6 in this section, then it'll be divide by step (6) = 1. And then multiply by price (1230).
+
+But wait! we have 1 left, because 7 - 6 = 1, so we pass to the next range: 6 to N (because we have no to_quantity). Thus 1 / step (1) = 1, then multiply by price (200).
+
+Finally, total = 1430
+
+__You can play with almost any value and try to fit it to your application__
