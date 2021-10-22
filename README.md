@@ -21,7 +21,7 @@ You have to install this component via npm:
 
 
 ```
-npm install bonillap/price-estimate
+npm i svelte-price-estimate
 ```
 
 And import these js and css in your index.html :
@@ -41,7 +41,7 @@ Add the component tag inside your html
 ```html
 <PriceEstimate data={data} mailingURL={mail}></PriceEstimate>
 ```
-The "data" attribute is explained above and the "mailingURL" is the URL of your endpoint or service to process the estimate data with the email that users set in the email field. 
+The "data" attribute is explained below and the "mailingURL" is the URL of your endpoint or service to process the estimate data with the email that users set in the email field. 
 
 Then, you can access it by default in http://localhost:5000 and watch the app running with changes in real time. You can check this <a>sample</a> repository.
 
