@@ -1,6 +1,6 @@
 {
   "name": "svelte-price-estimate",
-  "version": "0.4.2.2",
+  "version": "0.4.3",
   "description": "An easy way to show and manage your price estimation for your Svelte project",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
