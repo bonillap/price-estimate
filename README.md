@@ -50,7 +50,7 @@ Then, you can access it by default in http://localhost:5000 and watch the app ru
     <li><a href="https://kenwheeler.github.io/slick/">Slick</a></li>
 </ul>
 
-
+ 
 ## 📔 Data definition <a name = "data"></a>
 The data field in PriceEstimate is defined as an array. This is an example:
 
