@@ -235,4 +235,4 @@ But wait! we have 1 left, because 7 - 6 = 1, so we pass to the next range: 6 to 
 
 Finally, total = 1430
 
-__You can play with almost any value and try to fit it to your application__
+__You can play with almost any value and try to fit it into your application__
